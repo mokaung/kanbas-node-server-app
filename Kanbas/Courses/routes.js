@@ -1,5 +1,6 @@
 import * as dao from "./dao.js";
 import * as modulesDao from "../Modules/dao.js";
+import * as assignmentsDao from "../Assignments/dao.js";
 export default function CourseRoutes(app) {
   app.get("/api/courses", (req, res) => {
     const courses = dao.findAllCourses();
@@ -30,7 +31,10 @@ export default function CourseRoutes(app) {
     const newModule = modulesDao.createModule(module);
     res.send(newModule);
   });
-
-
+  app.get("/api/courses/:courseId/assignments", (req, res) => {
+    const { courseId } = req.params;
+    const assignments = assignmentsDao.findAssignmentsForCourse(courseId);
+    res.json(assignments);
+  });
 }
 
